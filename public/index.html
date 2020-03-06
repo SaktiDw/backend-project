@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>myapp</title>
+    <style>
+        form {
+            width: 400px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: stretch;
+        }
+    </style>
+</head>
+<body>
+<h1>Welcome to myapp</h1>
+<h3><a href="/api-explorer/">Interactive API Doc!</a></h3>
+<form action="/auth" method="post" enctype="application/json">
+    <input type="email" name="email">
+    <input type="password" name="password">
+    <button type="submit">Login</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,77 @@
+Schema Database
+
+jurusan
+{
+    _id : ObjectId,
+    nama: String
+    prodi: String[]
+}
+
+user
+{
+    _id : ObjectId,
+    nip: String,
+    name : String,
+    email : String,
+    password : hash,
+    role : String,
+    jurusan: String,
+    prodi: String,
+    foto: String
+}
+
+Ruang
+{
+    _id : ObjectId,
+    gedung : String:
+    ruang : [
+        {
+            kd_ruang : String,
+            kapasitas : String,
+            kapasitas_max : String,
+            status : String
+        }
+    ]
+}
+
+mata_kuliah 
+{
+    _id : ObjectId,
+    kd_matkul : String,
+    nama : String,
+    sks : Number,
+    pembagian : [],
+    jenis : String,
+    prasyarat : String,
+    semester: String,
+    praktikum : String
+}
+
+skema_perkuliahan 
+{
+    _id : ObjectId,
+    nama : String,
+    sesi : [
+        {
+            nama : String,
+            waktu: String,
+            sks : String,
+        }
+    ]
+}
+
+jadwal
+{
+    _id : ObjectId,
+    author : String,
+    Senin : [
+        {
+            Gedung : String,
+            Ruang : [
+                {
+                    kd_ruang : String,
+                }
+            ]
+        }
+    ]
+}

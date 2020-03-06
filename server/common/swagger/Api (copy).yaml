@@ -1,0 +1,508 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: myapp
+  description: My cool Mongoose, Typescript, Express app
+basePath: /api/v1 
+tags:
+  - name: Specification
+    description: The swagger API specification
+  - name: Examples
+    description: Simple example endpoints
+  - name: Jurusan
+    description: Simple jurusan endpoints
+  - name: Dosen
+    description: Simple dosen endpoints
+  - name: Mata Kuliah
+    description: Simple mata kuliah endpoints
+  - name: Skema Waktu
+    description: Simple skema waktu endpoints
+  
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+definitions: # ini buat definisikan model/schema data
+  ExampleBody:
+    type: object
+    title: Example
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: no_stress
+  JurusanBody:
+    type: object
+    title: Jurusan
+    required:
+      - jurusan
+    properties:
+      jurusan:
+        type: string
+        example: jurusan no stress
+      prodi:
+        type: array
+        items:
+          type: string
+        example: ["prodi 1","prodi 2"]
+  DosenBody:
+    type: object
+    title: Dosen
+    required:
+      - jurusan
+      - prodi
+      - nama
+      - email
+      - password
+      - role
+    properties:
+      jurusan:
+        type: string
+        example: jurusan no_stress
+      prodi:
+        type: string
+        example: prodi no_stress
+      nama:
+        type: string
+        example: nama no_stress
+      email:
+        type: string
+        example: email@no_stress.com
+      password:
+        type: string
+        example: no_stress
+      role:
+        type: string
+        example: no_stress
+  MatKulBody:
+    type: object
+    title: Mata Kuliah
+    required:
+      - kurikulum
+    properties:
+      kurikulum:
+        type: string
+        example: kurikulum_no_stress 2020
+  SkemaWaktuBody:
+    type: object
+    title: Skema Waktu
+    required:
+      - name
+      - skema
+    properties:
+      name:
+        type: string
+        example: name_no_stress 2020
+      skema:
+        type: array
+        items: object
+        properties:
+          nama_skema:
+            type: string
+          mulai:
+            type: string
+          akhir:
+            type: string
+          sks:
+            type: string
+        example: [{"nama_skema": "sesi 1", "mulai": "07:20","akhir":"10:00","sks":"3"},{"nama_skema": "sesi 2", "mulai": "10:20","akhir":"12:00","sks":"2"}]
+
+# url yang di akses user jadi http://localhost:3000/$basePath/paths basePath(ada diatas), paths(itu yang ada "/" dibawah)
+paths: 
+# spec
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
+
+# example crud
+  /examples:
+    get:
+      tags:
+        - Examples
+      description: Fetch all examples
+      responses:
+        200:
+          description: Returns all examples
+    post:
+      tags:
+        - Examples
+      description: Create a new example
+      parameters:
+        - name: example
+          in: body
+          description: an example
+          required: true
+          schema: 
+            $ref: "#/definitions/ExampleBody"
+      responses:
+        200:
+          description: Returns newly created example
+
+  /examples/{id}:
+    get:
+      tags:
+        - Examples
+      description: Get an example
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the example with the specified id
+        404:
+          description: Example not found
+    patch:
+      tags:
+        - Examples
+      description: Update an example
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to update
+          type: string
+        - name: example
+          in: body
+          description: example attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/ExampleBody"
+      responses:
+        200:
+          description: Return updated examples
+        404:
+          description: Example not found
+    delete:
+      tags:
+        - Examples
+      description: Delete an example
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to delete
+          type: string
+      responses:
+        204:
+          description: Delete the example with the specified id
+        404:
+          description: Example not found
+
+# jurusan crud
+  /jurusan:
+    get:
+      tags:
+        - Jurusan
+      description: Fetch all jurusan
+      responses:
+        200:
+          description: Returns all jurusan
+    post:
+      tags:
+        - Jurusan
+      description: Create a new jurusan
+      parameters:
+        - name: jurusan
+          in: body
+          description: an jurusan
+          required: true
+          schema: 
+            $ref: "#/definitions/JurusanBody"
+      responses:
+        200:
+          description: Returns newly created jurusan
+
+  /jurusan/{id}:
+    get:
+      tags:
+        - Jurusan
+      description: Get an jurusan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the jurusan to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the jurusan with the specified id
+        404:
+          description: Example not found
+    patch:
+      tags:
+        - Jurusan
+      description: Update an jurusan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the jurusan to update
+          type: string
+        - name: jurusan
+          in: body
+          description: jurusan attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/ExampleBody"
+      responses:
+        200:
+          description: Return updated jurusan
+        404:
+          description: Example not found
+    delete:
+      tags:
+        - Jurusan
+      description: Delete an jurusan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the jurusan to delete
+          type: string
+      responses:
+        204:
+          description: Delete the jurusan with the specified id
+        404:
+          description: Example not found
+
+# dosen crud
+  /dosen:
+    get:
+      tags:
+        - Dosen
+      description: Fetch all dosen
+      responses:
+        200:
+          description: Returns all dosen
+    post:
+      tags:
+        - Dosen
+      description: Create a new example
+      parameters:
+        - name: Dosen
+          in: body
+          description: a dosen
+          required: true
+          schema: 
+            $ref: "#/definitions/DosenBody"
+      responses:
+        200:
+          description: Returns newly created example
+
+  /dosen/{id}:
+    get:
+      tags:
+        - Dosen
+      description: Get an dosen
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the example with the specified id
+        404:
+          description: Dosen not found
+    patch:
+      tags:
+        - Dosen
+      description: Update an example
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to update
+          type: string
+        - name: example
+          in: body
+          description: example attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/DosenBody"
+      responses:
+        200:
+          description: Return updated dosen
+        404:
+          description: Dosen not found
+    delete:
+      tags:
+        - Dosen
+      description: Delete an example
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to delete
+          type: string
+      responses:
+        204:
+          description: Delete the example with the specified id
+        404:
+          description: Dosen not found
+
+# Mata Kuliah crud
+  /mata_kuliah:
+    get:
+      tags:
+        - Mata Kuliah
+      description: Fetch all mata_kuliah
+      responses:
+        200:
+          description: Returns all mata_kuliah
+    post:
+      tags:
+        - Mata Kuliah
+      description: Create a new mata_kuliah
+      parameters:
+        - name: mata_kuliah
+          in: body
+          description: an mata_kuliah
+          required: true
+          schema: 
+            $ref: "#/definitions/MatKulBody"
+      responses:
+        200:
+          description: Returns newly created mata_kuliah
+
+  /mata_kuliah/{id}:
+    get:
+      tags:
+        - Mata Kuliah
+      description: Get an mata_kuliah
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the mata_kuliah to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the mata_kuliah with the specified id
+        404:
+          description: MatKul not found
+    patch:
+      tags:
+        - Mata Kuliah
+      description: Update an mata_kuliah
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the mata_kuliah to update
+          type: string
+        - name: mata_kuliah
+          in: body
+          description: mata_kuliah attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/MatKulBody"
+      responses:
+        200:
+          description: Return updated mata_kuliah
+        404:
+          description: MatKul not found
+    delete:
+      tags:
+        - Mata Kuliah
+      description: Delete an mata_kuliah
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the mata_kuliah to delete
+          type: string
+      responses:
+        204:
+          description: Delete the mata_kuliah with the specified id
+        404:
+          description: MatKul not found
+
+# skema_waktu crud
+  /skema_waktu:
+    get:
+      tags:
+        - Skema Waktu
+      description: Fetch all skema_waktu
+      responses:
+        200:
+          description: Returns all skema_waktu
+    post:
+      tags:
+        - Skema Waktu
+      description: Create a new skema_waktu
+      parameters:
+        - name: skema_waktu
+          in: body
+          description: an skema_waktu
+          required: true
+          schema: 
+            $ref: "#/definitions/SkemaWaktuBody"
+      responses:
+        200:
+          description: Returns newly created skema_waktu
+
+  /skema_waktu/{id}:
+    get:
+      tags:
+        - Skema Waktu
+      description: Get an skema_waktu
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the skema_waktu to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the skema_waktu with the specified id
+        404:
+          description: SkemaWaktu not found
+    patch:
+      tags:
+        - Skema Waktu
+      description: Update an skema_waktu
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the skema_waktu to update
+          type: string
+        - name: skema_waktu
+          in: body
+          description: skema_waktu attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/SkemaWaktuBody"
+      responses:
+        200:
+          description: Return updated skema_waktu
+        404:
+          description: SkemaWaktu not found
+    delete:
+      tags:
+        - Skema Waktu
+      description: Delete an skema_waktu
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the skema_waktu to delete
+          type: string
+      responses:
+        204:
+          description: Delete the skema_waktu with the specified id
+        404:
+          description: SkemaWaktu not found

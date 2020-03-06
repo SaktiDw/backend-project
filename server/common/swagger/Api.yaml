@@ -1,0 +1,568 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: myapp
+  description: My cool Mongoose, Typescript, Express app
+basePath: /api
+tags:
+  - name: Specification
+    description: The swagger API specification
+  - name: Example
+    description: Simple example endpoints
+  - name: Auth
+    description: Simple example endpoints
+  - name: User
+    description: Simple example endpoints
+  - name: Matkul
+    description: Simple example endpoints
+  - name: Jurusan
+    description: Simple example endpoints
+
+consumes:
+  - application/json
+produces:
+  - application/json
+
+
+definitions: # ini buat definisikan model/schema data
+  ExampleBody:
+    type: object
+    title: Example
+    required:
+      - name
+    properties:
+      name:
+        type: string
+        example: no_stress
+  AuthBody:
+    type: object
+    title: Auth
+    required:
+      - email
+      - password
+    properties:
+      email:
+        type: string
+        example: test@gmail.com
+      password:
+        type: string
+        example: "1234"
+  UserBody:
+    type: object
+    title: User
+    required:
+      - nip
+      - name 
+      - email 
+      - password 
+      - role 
+      - jurusan
+      - prodi
+    properties:
+      nip:
+        type: string
+        example: "0912831827577188"
+      name:
+        type: string
+        example: "test"
+      email:
+        type: string
+        example: test@gmail.com
+      password:
+        type: string
+        example: "1234"
+      role:
+        type: string
+        example: "admin"
+      jurusan:
+        type: string
+        example: "JMTI"
+      prodi:
+        type: string
+        example: "Informatika"
+  MatkulBody:
+    type: object
+    title: Matkul
+    required:
+      - kd_matkul 
+      - name 
+      - sks 
+      - pembagian
+      - jenis 
+      - prasyarat 
+      - semester
+      - praktikum
+    properties:
+      kd_matkul:
+        type: string
+        example: stress
+      name:
+        type: string
+        example: stress
+      sks:
+        type: string
+        example: stress
+      pembagian:
+        type: array
+        items:
+          type: number
+        example: [1,2]
+      jenis:
+        type: string
+        example: stress
+      prasyarat:
+        type: string
+        example: stress
+      semester:
+        type: string
+        example: stress
+      praktikum:
+        type: string
+        example: stress
+  JurusanBody:
+    type: object
+    title: Jurusan
+    required:
+      - kd_jurusan
+      - name
+    properties:
+      kd_jurusan:
+        type: string
+        example: JAA
+      name:
+        type: string
+        example: Jurusan Apa Apa
+      prodi:
+        type: array
+        items:
+          type: string
+        example: []
+  ProdiBody:
+    type: object
+    title: Prodi
+    required:
+      - kd_jurusan
+      - prodi
+    properties:
+      kd_jurusan:
+        type: string
+        example: JAA
+      prodi:
+        type: array
+        items:
+          type: object
+        example: ["prodi","prodi2"]
+
+# url yang di akses user jadi http://localhost:3000/$basePath/paths
+
+paths: 
+# spec
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
+
+# example crud
+  /example:
+    get:
+      tags:
+        - Example
+      description: Fetch all example
+      responses:
+        200:
+          description: Returns all example
+    post:
+      tags:
+        - Example
+      description: Create a new example
+      parameters:
+        - name: example
+          in: body
+          description: an example
+          required: true
+          schema: 
+            $ref: "#/definitions/ExampleBody"
+      responses:
+        200:
+          description: Returns newly created example
+
+  /example/{id}:
+    get:
+      tags:
+        - Example
+      description: Get an example
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the example with the specified id
+        404:
+          description: Example not found
+    patch:
+      tags:
+        - Example
+      description: Update an example
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to update
+          type: string
+        - name: example
+          in: body
+          description: example attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/ExampleBody"
+      responses:
+        200:
+          description: Return updated example
+        404:
+          description: Example not found
+    delete:
+      tags:
+        - Example
+      description: Delete an example
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the example to delete
+          type: string
+      responses:
+        204:
+          description: Delete the example with the specified id
+        404:
+          description: Example not found
+
+# auth crud
+  /auth:
+    post:
+      tags:
+        - Auth
+      description: Create a new auth
+      parameters:
+        - name: auth
+          in: body
+          description: an auth
+          required: true
+          schema: 
+            $ref: "#/definitions/AuthBody"
+      responses:
+        200:
+          description: Returns newly created auth
+
+# user crud
+  /user:
+    get:
+      tags:
+        - User
+      description: Fetch all user
+      responses:
+        200:
+          description: Returns all user
+    post:
+      tags:
+        - User
+      description: Create a new user
+      parameters:
+        - name: user
+          in: body
+          description: an user
+          required: true
+          schema: 
+            $ref: "#/definitions/UserBody"
+      responses:
+        200:
+          description: Returns newly created user
+
+  /user/{id}:
+    get:
+      tags:
+        - User
+      description: Get an user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the user to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the user with the specified id
+        404:
+          description: User not found
+    patch:
+      tags:
+        - User
+      description: Update an user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the user to update
+          type: string
+        - name: user
+          in: body
+          description: user attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/UserBody"
+      responses:
+        200:
+          description: Return updated user
+        404:
+          description: User not found
+    delete:
+      tags:
+        - User
+      description: Delete an user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the user to delete
+          type: string
+      responses:
+        204:
+          description: Delete the user with the specified id
+        404:
+          description: User not found
+
+# matkul crud
+  /matkul:
+    get:
+      tags:
+        - Matkul
+      description: Fetch all matkul
+      responses:
+        200:
+          description: Returns all matkul
+    post:
+      tags:
+        - Matkul
+      description: Create a new matkul
+      parameters:
+        - name: matkul
+          in: body
+          description: an matkul
+          required: true
+          schema: 
+            $ref: "#/definitions/MatkulBody"
+      responses:
+        200:
+          description: Returns newly created matkul
+
+  /matkul/{id}:
+    get:
+      tags:
+        - Matkul
+      description: Get an matkul
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the matkul to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the matkul with the specified id
+        404:
+          description: Matkul not found
+    patch:
+      tags:
+        - Matkul
+      description: Update an matkul
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the matkul to update
+          type: string
+        - name: matkul
+          in: body
+          description: matkul attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/MatkulBody"
+      responses:
+        200:
+          description: Return updated matkul
+        404:
+          description: Matkul not found
+    delete:
+      tags:
+        - Matkul
+      description: Delete an matkul
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the matkul to delete
+          type: string
+      responses:
+        204:
+          description: Delete the matkul with the specified id
+        404:
+          description: Matkul not found
+
+# jurusan crud
+  /jurusan:
+    get:
+      tags:
+        - Jurusan
+      description: Fetch all jurusan
+      responses:
+        200:
+          description: Returns all jurusan
+    post:
+      tags:
+        - Jurusan
+      description: Create a new jurusan
+      parameters:
+        - name: jurusan
+          in: body
+          description: an jurusan
+          required: true
+          schema: 
+            $ref: "#/definitions/JurusanBody"
+      responses:
+        200:
+          description: Returns newly created jurusan
+
+  /jurusan/{id}:
+    get:
+      tags:
+        - Jurusan
+      description: Get an jurusan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the jurusan to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the jurusan with the specified id
+        404:
+          description: Jurusan not found
+    patch:
+      tags:
+        - Jurusan
+      description: Update an jurusan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the jurusan to update
+          type: string
+        - name: jurusan
+          in: body
+          description: jurusan attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/JurusanBody"
+      responses:
+        200:
+          description: Return updated jurusan
+        404:
+          description: Jurusan not found
+    delete:
+      tags:
+        - Jurusan
+      description: Delete an jurusan
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the jurusan to delete
+          type: string
+      responses:
+        204:
+          description: Delete the jurusan with the specified id
+        404:
+          description: Jurusan not found
+
+# prodi crud
+  /prodi:
+    get:
+      tags:
+        - Prodi
+      description: Fetch all prodi
+      responses:
+        200:
+          description: Returns all prodi
+    post:
+      tags:
+        - Prodi
+      description: Create a new prodi
+      parameters:
+        - name: prodi
+          in: body
+          description: an prodi
+          required: true
+          schema: 
+            $ref: "#/definitions/ProdiBody"
+      responses:
+        200:
+          description: Returns newly created prodi
+
+  /prodi/{id}:
+    get:
+      tags:
+        - Prodi
+      description: Get an prodi
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the prodi to retrieve
+          type: string
+      responses:
+        200:
+          description: Return the prodi with the specified id
+        404:
+          description: Prodi not found
+    patch:
+      tags:
+        - Prodi
+      description: Update an prodi
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the prodi to update
+          type: string
+        - name: prodi
+          in: body
+          description: prodi attribtues to update
+          required: true
+          schema: 
+            $ref: "#/definitions/ProdiBody"
+      responses:
+        200:
+          description: Return updated prodi
+        404:
+          description: Prodi not found
+    delete:
+      tags:
+        - Prodi
+      description: Delete an prodi
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The id of the prodi to delete
+          type: string
+      responses:
+        204:
+          description: Delete the prodi with the specified id
+        404:
+          description: Prodi not found
